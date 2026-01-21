@@ -1,38 +1,231 @@
-.App {
-  text-align: center;
+/* =========================
+   CarrieMiskin.com — App.css
+   OBVIOUS animated background
+   ========================= */
+
+/* ---------- Base ---------- */
+:root {
+  --ink: #1f1f1f;
+  --muted: rgba(31, 31, 31, 0.65);
+  --paper: rgba(255, 255, 255, 0.78);
+  --paper-strong: rgba(255, 255, 255, 0.9);
+  --stroke: rgba(31, 31, 31, 0.1);
+  --shadow: 0 18px 45px rgba(0, 0, 0, 0.12);
+  --radius: 24px;
+
+  /* Mouse movement (set by JS) */
+  --mx: 0;
+  --my: 0;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+* {
+  box-sizing: border-box;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+body {
+  margin: 0;
+  color: var(--ink);
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto,
+    Helvetica, Arial;
 }
 
-.App-header {
-  background-color: #282c34;
+/* ---------- Page ---------- */
+.page {
+  position: relative;
   min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  overflow: hidden;
+  background-size: cover;
+  background-position: center;
 }
 
-.App-link {
-  color: #61dafb;
+/* stronger readability veil */
+.page::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: rgba(255, 255, 255, 0.45);
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+.content {
+  position: relative;
+  z-index: 3;
+}
+
+/* ---------- VERY OBVIOUS BLOBS ---------- */
+.blob {
+  position: absolute;
+  width: 820px;
+  height: 820px;
+  border-radius: 50%;
+  filter: blur(38px);
+  opacity: 0.6;
+  pointer-events: none;
+  z-index: 1;
+
+  /* Strong mouse-follow */
+  transform: translate(calc(var(--mx) * 55px), calc(var(--my) * 55px));
+
+  animation: drift 12s linear infinite alternate;
+  will-change: transform;
+}
+
+.blob.one {
+  background: #f5a3c7;
+  top: -320px;
+  left: -300px;
+}
+
+.blob.two {
+  background: #9ed0f6;
+  top: 10%;
+  right: -340px;
+  animation-duration: 14s;
+}
+
+.blob.three {
+  background: #9fe0b3;
+  bottom: -360px;
+  left: 20%;
+  animation-duration: 16s;
+}
+
+/* BIG movement */
+@keyframes drift {
+  0% {
+    transform: translate(calc(var(--mx) * 55px), calc(var(--my) * 55px))
+      translate(-160px, -120px) scale(1);
   }
-  to {
-    transform: rotate(360deg);
+  50% {
+    transform: translate(calc(var(--mx) * 55px), calc(var(--my) * 55px))
+      translate(220px, 160px) scale(1.25);
+  }
+  100% {
+    transform: translate(calc(var(--mx) * 55px), calc(var(--my) * 55px))
+      translate(-180px, 260px) scale(1.1);
+  }
+}
+
+/* ---------- Layout ---------- */
+.wrap {
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 32px 20px 64px;
+}
+
+/* ---------- Header ---------- */
+.topBar {
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 20px 20px 0;
+  display: flex;
+  justify-content: space-between;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+}
+
+.logoWrap {
+  max-width: 480px;
+}
+
+.logo {
+  width: 100%;
+  height: auto;
+}
+
+.tag {
+  font-size: 14px;
+  color: var(--muted);
+}
+
+/* ---------- Cards ---------- */
+.heroCard,
+.infoCard {
+  background: var(--paper);
+  border-radius: var(--radius);
+  border: 1px solid var(--stroke);
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(16px);
+}
+
+/* ---------- Hero ---------- */
+.heroCard {
+  margin-top: 36px;
+  padding: 36px 32px;
+}
+
+.headline {
+  font-size: clamp(30px, 4vw, 46px);
+  line-height: 1.05;
+  margin-bottom: 12px;
+}
+
+.subhead {
+  font-size: 16px;
+  color: var(--muted);
+  max-width: 62ch;
+}
+
+.mini {
+  margin-top: 20px;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.pill {
+  padding: 8px 14px;
+  font-size: 13px;
+  border-radius: 999px;
+  border: 1px solid var(--stroke);
+  background: rgba(255, 255, 255, 0.7);
+}
+
+/* ---------- Info ---------- */
+.infoGrid {
+  margin-top: 20px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.infoCard {
+  padding: 24px;
+}
+
+.infoCard h2 {
+  margin: 0 0 10px;
+  font-size: 16px;
+}
+
+.infoCard p {
+  margin: 0;
+  color: var(--muted);
+}
+
+.footer {
+  margin-top: 20px;
+  text-align: center;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+/* ---------- Mobile ---------- */
+@media (max-width: 780px) {
+  .infoGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .logoWrap {
+    max-width: 340px;
+  }
+
+  .blob {
+    width: 600px;
+    height: 600px;
+    opacity: 0.5;
   }
 }
