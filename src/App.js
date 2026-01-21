@@ -43,15 +43,15 @@ export default function App() {
         <main className="wrap">
           <section className="heroCard">
             <h1 className="headline">
-              New site coming soon — portfolio and case studies on the way.
+              New site coming soon, portfolio and case studies on the way.
             </h1>
 
-            <p className="subhead">
+            {/* <p className="subhead">
               I’m a web and graphic designer who creates clean, intuitive, and
               visually engaging digital experiences. I focus on thoughtful
               design, strong visual systems, and frontend implementation —
               bringing ideas from concept through execution.
-            </p>
+            </p> */}
 
             <div className="mini">
               <span className="pill">Web Design</span>
