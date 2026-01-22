@@ -1,11 +1,38 @@
 import "./App.css";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 import bg from "./assets/Background-01.png";
 import flower from "./assets/CarrieMiskin_Flower-01.png";
-import flowerWhite from "./assets/CarrieMiskin_Flower-white.png"; // ✅ NEW
+import flowerWhite from "./assets/CarrieMiskin_Flower-white.png";
 
 export default function App() {
+  // -------------------------
+  // Dark mode
+  // -------------------------
+  const getInitialTheme = () => {
+    const saved = localStorage.getItem("theme");
+    if (saved === "dark" || saved === "light") return saved;
+
+    return window.matchMedia &&
+      window.matchMedia("(prefers-color-scheme: dark)").matches
+      ? "dark"
+      : "light";
+  };
+
+  const [theme, setTheme] = useState(getInitialTheme);
+
+  useEffect(() => {
+    document.documentElement.setAttribute("data-theme", theme);
+    localStorage.setItem("theme", theme);
+  }, [theme]);
+
+  const toggleTheme = () => {
+    setTheme((t) => (t === "dark" ? "light" : "dark"));
+  };
+
+  // -------------------------
+  // Mouse blobs
+  // -------------------------
   useEffect(() => {
     const onMove = (e) => {
       const x = (e.clientX / window.innerWidth - 0.5) * 2;
@@ -17,25 +44,6 @@ export default function App() {
     window.addEventListener("mousemove", onMove, { passive: true });
     return () => window.removeEventListener("mousemove", onMove);
   }, []);
-
-  // Dark mode (keeps your design)
-  const [theme, setTheme] = useState(() => {
-    const saved = localStorage.getItem("theme");
-    if (saved === "dark" || saved === "light") return saved;
-
-    const prefersDark =
-      window.matchMedia &&
-      window.matchMedia("(prefers-color-scheme: dark)").matches;
-
-    return prefersDark ? "dark" : "light";
-  });
-
-  useEffect(() => {
-    document.documentElement.setAttribute("data-theme", theme);
-    localStorage.setItem("theme", theme);
-  }, [theme]);
-
-  const toggleTheme = () => setTheme((t) => (t === "dark" ? "light" : "dark"));
 
   const email = "carriemiskin@gmail.com";
   const linkedInUrl = "https://www.linkedin.com/in/carriemiskin/";
@@ -51,6 +59,39 @@ export default function App() {
     }
   };
 
+  const WAVE_TEXT =
+    "WEB & GRAPHIC DESIGNER • UX/UI • FRONTEND DESIGN • BRANDING • VISUAL DESIGN • ";
+
+  // One wide SVG tile
+  const WaveTile = useMemo(
+    () =>
+      function WaveTileInner() {
+        return (
+          <svg
+            className="waveSvg"
+            viewBox="0 0 2400 140"
+            xmlns="http://www.w3.org/2000/svg"
+            aria-hidden="true"
+            preserveAspectRatio="none"
+          >
+            <path
+              id="wavePath"
+              d="M0,70 C300,20 600,120 900,70 C1200,20 1500,120 1800,70 C2100,20 2250,110 2400,70"
+              fill="none"
+            />
+            <text className="waveText">
+              <textPath href="#wavePath" startOffset="0%">
+                {WAVE_TEXT.repeat(30)}
+              </textPath>
+            </text>
+          </svg>
+        );
+      },
+    []
+  );
+
+  const logoSrc = theme === "dark" ? flowerWhite : flower;
+
   return (
     <div className="page" style={{ backgroundImage: `url(${bg})` }}>
       <div className="blob one" aria-hidden="true" />
@@ -61,42 +102,66 @@ export default function App() {
         <header className="topBar">
           <div className="brand">
             <div className="logoWrap">
-              {/* ✅ Swap logo based on theme */}
-              <img
-                className="logo"
-                src={theme === "dark" ? flowerWhite : flower}
-                alt="Carrie Miskin logo"
-              />
+              <img className="logo" src={logoSrc} alt="Carrie Miskin logo" />
             </div>
             <div className="brandText">
               <div className="tag">Web & Graphic Designer</div>
             </div>
           </div>
 
-          {/* Dark mode toggle */}
-          <button
-            className="themeToggle"
-            type="button"
-            onClick={toggleTheme}
-            aria-label="Toggle dark mode"
-            title="Toggle dark mode"
-          >
-            {theme === "dark" ? (
-              <svg className="themeIcon" viewBox="0 0 24 24" aria-hidden="true">
-                <path
-                  fill="currentColor"
-                  d="M12 18.25a6.25 6.25 0 1 1 0-12.5 6.25 6.25 0 0 1 0 12.5Zm0-2a4.25 4.25 0 1 0 0-8.5 4.25 4.25 0 0 0 0 8.5ZM11 2h2v3h-2V2Zm0 17h2v3h-2v-3ZM2 11h3v2H2v-2Zm17 0h3v2h-3v-2ZM4.22 5.64l1.42-1.42 2.12 2.12-1.42 1.42-2.12-2.12Zm12.02 12.02 1.42-1.42 2.12 2.12-1.42 1.42-2.12-2.12ZM18.36 4.22l1.42 1.42-2.12 2.12-1.42-1.42 2.12-2.12ZM5.64 19.78l-1.42-1.42 2.12-2.12 1.42 1.42-2.12 2.12Z"
-                />
-              </svg>
-            ) : (
-              <svg className="themeIcon" viewBox="0 0 24 24" aria-hidden="true">
-                <path
-                  fill="currentColor"
-                  d="M20.2 15.7A7.6 7.6 0 0 1 8.3 3.8a.9.9 0 0 1 1.08 1.08A5.8 5.8 0 1 0 19.12 14.62a.9.9 0 0 1 1.08 1.08Z"
-                />
-              </svg>
-            )}
-          </button>
+          {/* ICON TOGGLE */}
+          <div className="topRight">
+            <button
+              type="button"
+              className="themeToggle"
+              onClick={toggleTheme}
+              aria-label={
+                theme === "dark"
+                  ? "Switch to light mode"
+                  : "Switch to dark mode"
+              }
+              title={theme === "dark" ? "Light mode" : "Dark mode"}
+            >
+              {theme === "dark" ? (
+                // Sun icon
+                <svg
+                  className="themeIcon"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                  aria-hidden="true"
+                >
+                  <path
+                    d="M12 18a6 6 0 1 0 0-12 6 6 0 0 0 0 12Z"
+                    stroke="currentColor"
+                    strokeWidth="1.8"
+                  />
+                  <path
+                    d="M12 2v2.2M12 19.8V22M2 12h2.2M19.8 12H22M4.2 4.2l1.6 1.6M18.2 18.2l1.6 1.6M19.8 4.2l-1.6 1.6M5.8 18.2l-1.6 1.6"
+                    stroke="currentColor"
+                    strokeWidth="1.8"
+                    strokeLinecap="round"
+                  />
+                </svg>
+              ) : (
+                // Moon icon
+                <svg
+                  className="themeIcon"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                  aria-hidden="true"
+                >
+                  <path
+                    d="M21 14.5A8.5 8.5 0 0 1 9.5 3a7 7 0 1 0 11.5 11.5Z"
+                    stroke="currentColor"
+                    strokeWidth="1.8"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              )}
+            </button>
+          </div>
         </header>
 
         <main className="wrap">
@@ -129,6 +194,7 @@ export default function App() {
               <h2>Get in Touch</h2>
 
               <div className="contactRowNew">
+                {/* Email (copy) */}
                 <button
                   className="contactBtnNew"
                   type="button"
@@ -185,6 +251,7 @@ export default function App() {
                   </span>
                 </button>
 
+                {/* LinkedIn */}
                 <a
                   className="contactBtnNew"
                   href={linkedInUrl}
@@ -197,6 +264,7 @@ export default function App() {
                   <span className="contactBtnLabelNew">LinkedIn</span>
                 </a>
 
+                {/* GitHub */}
                 <a
                   className="contactBtnNew"
                   href={githubUrl}
@@ -219,6 +287,7 @@ export default function App() {
                   <span className="contactBtnLabelNew">GitHub</span>
                 </a>
 
+                {/* Location */}
                 <div className="contactBtnNew contactBtnStaticNew">
                   <span className="contactBtnIconNew" aria-hidden="true">
                     <svg
@@ -248,15 +317,25 @@ export default function App() {
               </div>
             </div>
           </section>
-
-          <footer className="footer">
-            <span>© {new Date().getFullYear()} Carrie Miskin</span>
-            <span className="dot">•</span>
-            <span className="muted">Site in progress</span>
-            <span className="dot">•</span>
-            <span className="muted2">All rights reserved</span>
-          </footer>
         </main>
+
+        {/* FULL-BLEED MARQUEE */}
+        <div className="waveMarquee" aria-hidden="true">
+          <div className="waveTrack">
+            <div className="waveTile">
+              <WaveTile />
+            </div>
+            <div className="waveTile">
+              <WaveTile />
+            </div>
+          </div>
+        </div>
+
+        <footer className="footer">
+          <span>© {new Date().getFullYear()} Carrie Miskin</span>
+          <span className="dot">•</span>
+          <span className="muted">Site in progress. All rights reserved.</span>
+        </footer>
       </div>
     </div>
   );

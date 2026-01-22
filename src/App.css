@@ -1,46 +1,60 @@
 /* =========================
    CarrieMiskin.com — App.css
-   CLEAN + CONSISTENT TYPE
    ========================= */
 
-/* Light defaults (your current look) */
 :root {
   --ink: #1f1f1f;
   --muted: rgba(31, 31, 31, 0.62);
-
   --paper: rgba(255, 255, 255, 0.78);
   --stroke: rgba(31, 31, 31, 0.1);
   --shadow: 0 18px 45px rgba(0, 0, 0, 0.12);
+  --radius: 24px;
 
   --veil: rgba(255, 255, 255, 0.45);
 
-  /* tile + icon colors (so icons flip automatically in dark mode) */
-  --tileBorder: rgba(31, 31, 31, 0.12);
-  --tileBg: rgba(255, 255, 255, 0.84);
-  --tileBgHover: rgba(255, 255, 255, 0.92);
-  --iconInk: #111;
+  /* wave */
+  --wave-ink: rgba(31, 31, 31, 0.45);
 
-  --radius: 24px;
+  /* tiles */
+  --tile-bg: rgba(255, 255, 255, 0.84);
+  --tile-bg-hover: rgba(255, 255, 255, 0.92);
+  --tile-border: rgba(31, 31, 31, 0.12);
 
+  /* icon color */
+  --icon: #111;
+
+  /* Toggle */
+  --toggle-bg: rgba(255, 255, 255, 0.55);
+  --toggle-border: rgba(31, 31, 31, 0.14);
+
+  /* Mouse movement (set by JS) */
   --mx: 0;
   --my: 0;
 }
 
-/* Dark mode overrides (NO redesign — same sizing/type) */
+/* -------------------------
+     Dark mode tokens
+     ------------------------- */
 :root[data-theme="dark"] {
   --ink: rgba(255, 255, 255, 0.92);
-  --muted: rgba(255, 255, 255, 0.65);
+  --muted: rgba(255, 255, 255, 0.66);
 
-  --paper: rgba(20, 20, 20, 0.62);
+  --paper: rgba(20, 22, 26, 0.72);
   --stroke: rgba(255, 255, 255, 0.12);
-  --shadow: 0 18px 45px rgba(0, 0, 0, 0.55);
+  --shadow: 0 18px 45px rgba(0, 0, 0, 0.45);
 
-  --veil: rgba(0, 0, 0, 0.55);
+  --veil: rgba(0, 0, 0, 0.35);
 
-  --tileBorder: rgba(255, 255, 255, 0.14);
-  --tileBg: rgba(20, 20, 20, 0.72);
-  --tileBgHover: rgba(30, 30, 30, 0.82);
-  --iconInk: rgba(255, 255, 255, 0.92);
+  --wave-ink: rgba(255, 255, 255, 0.42);
+
+  --tile-bg: rgba(22, 24, 28, 0.78);
+  --tile-bg-hover: rgba(26, 28, 34, 0.88);
+  --tile-border: rgba(255, 255, 255, 0.14);
+
+  --icon: rgba(255, 255, 255, 0.92);
+
+  --toggle-bg: rgba(20, 22, 26, 0.55);
+  --toggle-border: rgba(255, 255, 255, 0.16);
 }
 
 * {
@@ -104,6 +118,10 @@ a {
   transform: translate(calc(var(--mx) * 55px), calc(var(--my) * 55px));
   animation: drift 12s linear infinite alternate;
   will-change: transform;
+}
+
+:root[data-theme="dark"] .blob {
+  opacity: 0.45;
 }
 
 .blob.one {
@@ -178,20 +196,26 @@ a {
   font-weight: 500;
 }
 
-/* NEW: theme toggle (small, doesn’t change layout) */
+/* ICON toggle button */
+.topRight {
+  display: flex;
+  align-items: center;
+}
+
 .themeToggle {
   appearance: none;
-  border: 1px solid var(--stroke);
-  background: var(--paper);
-  color: var(--ink);
+  width: 38px;
+  height: 38px;
   border-radius: 999px;
-  width: 42px;
-  height: 42px;
+  border: 1px solid var(--toggle-border);
+  background: var(--toggle-bg);
+  color: var(--ink);
   display: grid;
   place-items: center;
   cursor: pointer;
+  backdrop-filter: blur(10px);
+  transition: transform 160ms ease, background 160ms ease, box-shadow 160ms ease;
   box-shadow: 0 10px 24px rgba(0, 0, 0, 0.06);
-  transition: transform 160ms ease, box-shadow 160ms ease, background 160ms ease;
 }
 
 .themeToggle:hover {
@@ -199,9 +223,19 @@ a {
   box-shadow: 0 14px 30px rgba(0, 0, 0, 0.09);
 }
 
+.themeToggle:active {
+  transform: translateY(0px);
+}
+
+.themeToggle:focus-visible {
+  outline: 2px solid rgba(120, 120, 120, 0.45);
+  outline-offset: 3px;
+}
+
 .themeIcon {
   width: 18px;
   height: 18px;
+  display: block;
 }
 
 /* ---------- Cards ---------- */
@@ -245,7 +279,7 @@ a {
 }
 
 :root[data-theme="dark"] .pill {
-  background: rgba(0, 0, 0, 0.25);
+  background: rgba(20, 22, 26, 0.55);
 }
 
 /* ---------- Info Grid ---------- */
@@ -262,7 +296,7 @@ a {
 
 .infoCard h2 {
   margin: 0 0 12px;
-  font-size: 15px; /* keeping exactly what you had */
+  font-size: 15px;
   font-weight: 800;
   letter-spacing: -0.02em;
   text-align: left;
@@ -277,8 +311,8 @@ a {
 }
 
 /* =========================
-   Contact tiles 
-   ========================= */
+     Contact tiles
+     ========================= */
 
 .contactRowNew {
   margin-top: 14px;
@@ -289,8 +323,8 @@ a {
 
 .contactBtnNew {
   appearance: none;
-  border: 1px solid var(--tileBorder);
-  background: var(--tileBg);
+  border: 1px solid var(--tile-border);
+  background: var(--tile-bg);
   border-radius: 18px;
 
   display: flex;
@@ -313,7 +347,7 @@ a {
 .contactBtnNew:hover {
   transform: translateY(-2px);
   box-shadow: 0 14px 30px rgba(0, 0, 0, 0.09);
-  background: var(--tileBgHover);
+  background: var(--tile-bg-hover);
 }
 
 .contactBtnNew:active {
@@ -328,23 +362,21 @@ a {
   font-weight: 800;
   font-size: 30px;
   line-height: 1;
-  color: var(--iconInk); /* KEY: flips in dark mode */
+  color: var(--icon);
 }
 
-/* SVG tile icons (email + location) */
 .tileIconNew {
   width: 38px;
   height: 38px;
   display: block;
-  color: var(--iconInk); /* KEY: flips in dark mode */
+  color: var(--icon);
 }
 
-/* GitHub SVG */
 .ghIconNew {
   width: 34px;
   height: 34px;
   display: block;
-  color: var(--iconInk); /* KEY: flips in dark mode */
+  color: var(--icon);
 }
 
 .contactBtnLabelNew {
@@ -357,25 +389,23 @@ a {
 .contactBtnHintNew {
   font-size: 10px;
   font-weight: 500;
-  color: var(--muted); /* use muted token */
+  color: var(--muted);
   line-height: 1.2;
   text-align: center;
 }
 
-/* Copy button under Email */
 .copyPillNew {
   width: 44px;
   height: 20px;
   border-radius: 14px;
   display: grid;
   place-items: center;
-  /* keeping your original no-background look */
 }
 
 .copyIconNew {
   width: 20px;
   height: 20px;
-  color: var(--muted); /* use muted token */
+  color: var(--muted);
 }
 
 .contactBtnStaticNew {
@@ -385,16 +415,74 @@ a {
 .contactBtnStaticNew:hover {
   transform: none;
   box-shadow: 0 10px 24px rgba(0, 0, 0, 0.06);
-  background: var(--tileBg);
+  background: var(--tile-bg);
+}
+
+/* =========================
+     FULL-BLEED, CONTINUOUS WAVE MARQUEE
+     ========================= */
+
+.waveMarquee {
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+
+  overflow: hidden;
+  pointer-events: none;
+  user-select: none;
+
+  margin-top: 5px;
+  margin-bottom: 6px;
+}
+
+.waveTrack {
+  display: flex;
+  gap: 0;
+  width: max-content;
+  will-change: transform;
+  animation: waveScroll 20s linear infinite;
+}
+
+.waveTile {
+  flex: 0 0 auto;
+}
+
+.waveSvg {
+  width: 2400px;
+  height: 120px;
+  display: block;
+}
+
+.waveText {
+  fill: var(--wave-ink);
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+@keyframes waveScroll {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .waveTrack {
+    animation: none;
+  }
 }
 
 /* ---------- Footer ---------- */
 .footer {
-  margin-top: 20px;
   text-align: center;
   font-size: 13px;
   color: var(--muted);
   font-weight: 500;
+  padding: 0 0 18px;
 }
 
 /* ---------- Mobile ---------- */
@@ -417,6 +505,14 @@ a {
     width: 600px;
     height: 600px;
     opacity: 0.5;
+  }
+
+  .waveSvg {
+    width: 1800px;
+    height: 66px;
+  }
+  .waveText {
+    font-size: 16px;
   }
 }
 
