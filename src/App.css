@@ -1,19 +1,16 @@
 /* =========================
    CarrieMiskin.com — App.css
-   OBVIOUS animated background
+   CLEAN + CONSISTENT TYPE
    ========================= */
 
-/* ---------- Base ---------- */
 :root {
   --ink: #1f1f1f;
-  --muted: rgba(31, 31, 31, 0.65);
+  --muted: rgba(31, 31, 31, 0.62);
   --paper: rgba(255, 255, 255, 0.78);
-  --paper-strong: rgba(255, 255, 255, 0.9);
   --stroke: rgba(31, 31, 31, 0.1);
   --shadow: 0 18px 45px rgba(0, 0, 0, 0.12);
   --radius: 24px;
 
-  /* Mouse movement (set by JS) */
   --mx: 0;
   --my: 0;
 }
@@ -27,6 +24,21 @@ body {
   color: var(--ink);
   font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto,
     Helvetica, Arial;
+  font-weight: 400;
+}
+
+h1,
+h2,
+h3,
+p,
+a,
+button,
+span {
+  font-family: inherit;
+}
+
+a {
+  color: inherit;
 }
 
 /* ---------- Page ---------- */
@@ -38,7 +50,6 @@ body {
   background-position: center;
 }
 
-/* stronger readability veil */
 .page::before {
   content: "";
   position: absolute;
@@ -52,7 +63,7 @@ body {
   z-index: 3;
 }
 
-/* ---------- VERY OBVIOUS BLOBS ---------- */
+/* ---------- Blobs ---------- */
 .blob {
   position: absolute;
   width: 820px;
@@ -62,10 +73,7 @@ body {
   opacity: 0.6;
   pointer-events: none;
   z-index: 1;
-
-  /* Strong mouse-follow */
   transform: translate(calc(var(--mx) * 55px), calc(var(--my) * 55px));
-
   animation: drift 12s linear infinite alternate;
   will-change: transform;
 }
@@ -90,7 +98,6 @@ body {
   animation-duration: 16s;
 }
 
-/* BIG movement */
 @keyframes drift {
   0% {
     transform: translate(calc(var(--mx) * 55px), calc(var(--my) * 55px))
@@ -139,6 +146,7 @@ body {
 .tag {
   font-size: 14px;
   color: var(--muted);
+  font-weight: 500;
 }
 
 /* ---------- Cards ---------- */
@@ -160,13 +168,9 @@ body {
 .headline {
   font-size: clamp(30px, 4vw, 46px);
   line-height: 1.05;
-  margin-bottom: 12px;
-}
-
-.subhead {
-  font-size: 16px;
-  color: var(--muted);
-  max-width: 62ch;
+  margin: 0 0 12px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
 }
 
 .mini {
@@ -182,9 +186,10 @@ body {
   border-radius: 999px;
   border: 1px solid var(--stroke);
   background: rgba(255, 255, 255, 0.7);
+  font-weight: 500;
 }
 
-/* ---------- Info ---------- */
+/* ---------- Info Grid ---------- */
 .infoGrid {
   margin-top: 20px;
   display: grid;
@@ -197,23 +202,151 @@ body {
 }
 
 .infoCard h2 {
-  margin: 0 0 10px;
-  font-size: 16px;
+  margin: 0 0 12px;
+  font-size: 15px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  text-align: left;
 }
 
 .infoCard p {
   margin: 0;
   color: var(--muted);
+  font-size: 16px;
+  line-height: 1.45;
+  font-weight: 400;
 }
 
+/* =========================
+     Contact tiles 
+     ========================= */
+
+.contactRowNew {
+  margin-top: 14px;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 13px;
+}
+
+.contactBtnNew {
+  appearance: none;
+  border: 1px solid rgba(31, 31, 31, 0.12);
+  background: rgba(255, 255, 255, 0.84);
+  border-radius: 18px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  padding: 12px 12px;
+  min-height: 124px;
+
+  text-decoration: none;
+  color: inherit;
+
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.06);
+  cursor: pointer;
+  transition: transform 160ms ease, box-shadow 160ms ease, background 160ms ease;
+}
+
+.contactBtnNew:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.09);
+  background: rgba(255, 255, 255, 0.92);
+}
+
+.contactBtnNew:active {
+  transform: translateY(-1px);
+}
+
+/* icons */
+.contactBtnIconNew {
+  background: transparent;
+  display: grid;
+  place-items: center;
+  font-weight: 800;
+  font-size: 30px;
+  line-height: 1;
+  color: #111;
+}
+
+/* SVG tile icons (email + location) */
+.tileIconNew {
+  width: 38px;
+  height: 38px;
+  display: block;
+  color: #111;
+}
+
+/* GitHub SVG */
+.ghIconNew {
+  width: 34px;
+  height: 34px;
+  display: block;
+  color: #111;
+}
+
+.contactBtnLabelNew {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+
+.contactBtnHintNew {
+  font-size: 10px;
+  font-weight: 500;
+  color: rgba(31, 31, 31, 0.55);
+  line-height: 1.2;
+  text-align: center;
+}
+
+/* Copy button under Email */
+.copyPillNew {
+  width: 44px;
+  height: 20px;
+  border-radius: 14px;
+  display: grid;
+  place-items: center;
+  /* background: rgba(255, 255, 255, 0.92);
+  border: 1px solid rgba(31, 31, 31, 0.12);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.06); */
+}
+
+.copyIconNew {
+  width: 20px;
+  height: 20px;
+  color: rgba(31, 31, 31, 0.7);
+}
+
+.contactBtnStaticNew {
+  cursor: default;
+}
+
+.contactBtnStaticNew:hover {
+  transform: none;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.06);
+  background: rgba(255, 255, 255, 0.84);
+}
+
+/* ---------- Footer ---------- */
 .footer {
   margin-top: 20px;
   text-align: center;
   font-size: 13px;
   color: var(--muted);
+  font-weight: 500;
 }
 
 /* ---------- Mobile ---------- */
+@media (max-width: 980px) {
+  .contactRowNew {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
 @media (max-width: 780px) {
   .infoGrid {
     grid-template-columns: 1fr;
@@ -227,5 +360,11 @@ body {
     width: 600px;
     height: 600px;
     opacity: 0.5;
+  }
+}
+
+@media (max-width: 520px) {
+  .contactRowNew {
+    grid-template-columns: 1fr;
   }
 }

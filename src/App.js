@@ -5,11 +5,10 @@ import bg from "./assets/Background-01.png";
 import flower from "./assets/CarrieMiskin_Flower-01.png";
 
 export default function App() {
-  // Adds that “alive” feel: blobs subtly follow your mouse (like the example site)
   useEffect(() => {
     const onMove = (e) => {
-      const x = (e.clientX / window.innerWidth - 0.5) * 2; // -1..1
-      const y = (e.clientY / window.innerHeight - 0.5) * 2; // -1..1
+      const x = (e.clientX / window.innerWidth - 0.5) * 2;
+      const y = (e.clientY / window.innerHeight - 0.5) * 2;
       document.documentElement.style.setProperty("--mx", x.toFixed(3));
       document.documentElement.style.setProperty("--my", y.toFixed(3));
     };
@@ -18,14 +17,26 @@ export default function App() {
     return () => window.removeEventListener("mousemove", onMove);
   }, []);
 
+  const email = "carriemiskin@gmail.com";
+  const linkedInUrl = "https://www.linkedin.com/in/carriemiskin/";
+  const githubUrl = "https://github.com/cmiskin1993";
+  const locationText = "Philadelphia, PA";
+
+  const copyToClipboard = async (text) => {
+    try {
+      await navigator.clipboard.writeText(text);
+      alert("Copied!");
+    } catch (e) {
+      window.prompt("Copy this:", text);
+    }
+  };
+
   return (
     <div className="page" style={{ backgroundImage: `url(${bg})` }}>
-      {/* animated background blobs */}
       <div className="blob one" aria-hidden="true" />
       <div className="blob two" aria-hidden="true" />
       <div className="blob three" aria-hidden="true" />
 
-      {/* all site content */}
       <div className="content">
         <header className="topBar">
           <div className="brand">
@@ -37,7 +48,7 @@ export default function App() {
             </div>
           </div>
 
-          <nav className="nav">{/* add links later if you want */}</nav>
+          <nav className="nav" />
         </header>
 
         <main className="wrap">
@@ -45,13 +56,6 @@ export default function App() {
             <h1 className="headline">
               New site coming soon, portfolio and case studies on the way.
             </h1>
-
-            {/* <p className="subhead">
-              I’m a web and graphic designer who creates clean, intuitive, and
-              visually engaging digital experiences. I focus on thoughtful
-              design, strong visual systems, and frontend implementation —
-              bringing ideas from concept through execution.
-            </p> */}
 
             <div className="mini">
               <span className="pill">Web Design</span>
@@ -73,34 +77,143 @@ export default function App() {
               </p>
             </div>
 
-            <div id="contact" className="infoCard">
-              <h2>Contact</h2>
-              <p className="contactLine">
-                Email:{" "}
-                <a href="mailto:carriemiskin@gmail.com">
-                  carriemiskin@gmail.com
-                </a>
-              </p>
-              <p className="contactLine">
-                LinkedIn:{" "}
+            <div id="contact" className="infoCard contactCardNew">
+              <h2>Get in Touch</h2>
+
+              <div className="contactRowNew">
+                {/* Email (copy) */}
+                <button
+                  className="contactBtnNew"
+                  type="button"
+                  onClick={() => copyToClipboard(email)}
+                  aria-label="Copy email address"
+                  title="Copy email"
+                >
+                  <span className="contactBtnIconNew" aria-hidden="true">
+                    {/* BLACK email icon */}
+                    <svg
+                      className="tileIconNew"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M4.5 7.5h15v9h-15v-9Z"
+                        stroke="currentColor"
+                        strokeWidth="1.8"
+                        strokeLinejoin="round"
+                      />
+                      <path
+                        d="M5.5 8.5 12 13l6.5-4.5"
+                        stroke="currentColor"
+                        strokeWidth="1.8"
+                        strokeLinejoin="round"
+                        strokeLinecap="round"
+                      />
+                    </svg>
+                  </span>
+
+                  <span className="contactBtnLabelNew">Email</span>
+
+                  {/* copy icon under Email */}
+                  <span className="copyPillNew" aria-hidden="true">
+                    <svg
+                      className="copyIconNew"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M9 9h10v10H9V9Z"
+                        stroke="currentColor"
+                        strokeWidth="1.7"
+                        strokeLinejoin="round"
+                      />
+                      <path
+                        d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1"
+                        stroke="currentColor"
+                        strokeWidth="1.7"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </svg>
+                  </span>
+                </button>
+
+                {/* LinkedIn */}
                 <a
-                  href="https://www.linkedin.com/in/carriemiskin/"
+                  className="contactBtnNew"
+                  href={linkedInUrl}
                   target="_blank"
                   rel="noreferrer"
                 >
-                  linkedin.com/carriemiskin
+                  <span className="contactBtnIconNew" aria-hidden="true">
+                    in
+                  </span>
+                  <span className="contactBtnLabelNew">LinkedIn</span>
                 </a>
-              </p>
-              <p className="contactLine">
-                Portfolio: <span className="muted">launching soon</span>
-              </p>
+
+                {/* GitHub */}
+                <a
+                  className="contactBtnNew"
+                  href={githubUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  <span className="contactBtnIconNew" aria-hidden="true">
+                    <svg
+                      className="ghIconNew"
+                      viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg"
+                      aria-hidden="true"
+                    >
+                      <path
+                        fill="currentColor"
+                        d="M12 2C6.477 2 2 6.596 2 12.26c0 4.53 2.865 8.37 6.839 9.727.5.096.682-.22.682-.49 0-.244-.009-.89-.014-1.747-2.782.62-3.369-1.37-3.369-1.37-.454-1.18-1.11-1.495-1.11-1.495-.908-.64.069-.627.069-.627 1.004.073 1.533 1.056 1.533 1.056.892 1.563 2.341 1.112 2.91.85.092-.67.349-1.113.635-1.369-2.221-.26-4.556-1.14-4.556-5.07 0-1.12.389-2.035 1.03-2.753-.103-.26-.446-1.31.098-2.73 0 0 .84-.276 2.75 1.05A9.19 9.19 0 0 1 12 7.12c.85.004 1.705.118 2.505.344 1.909-1.326 2.748-1.05 2.748-1.05.546 1.42.203 2.47.1 2.73.64.718 1.028 1.633 1.028 2.753 0 3.94-2.339 4.808-4.566 5.063.359.318.679.94.679 1.895 0 1.368-.013 2.47-.013 2.806 0 .272.18.59.688.489C19.138 20.626 22 16.787 22 12.26 22 6.596 17.523 2 12 2Z"
+                      />
+                    </svg>
+                  </span>
+                  <span className="contactBtnLabelNew">GitHub</span>
+                </a>
+
+                {/* Location */}
+                <div className="contactBtnNew contactBtnStaticNew">
+                  <span className="contactBtnIconNew" aria-hidden="true">
+                    {/* BLACK location pin */}
+                    <svg
+                      className="tileIconNew"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M12 21s6-5.2 6-10.2A6 6 0 0 0 6 10.8C6 15.8 12 21 12 21Z"
+                        stroke="currentColor"
+                        strokeWidth="1.8"
+                        strokeLinejoin="round"
+                      />
+                      <path
+                        d="M12 13a2.2 2.2 0 1 0 0-4.4A2.2 2.2 0 0 0 12 13Z"
+                        stroke="currentColor"
+                        strokeWidth="1.8"
+                        strokeLinejoin="round"
+                      />
+                    </svg>
+                  </span>
+
+                  <span className="contactBtnLabelNew">Location</span>
+                  <span className="contactBtnHintNew">{locationText}</span>
+                </div>
+              </div>
             </div>
           </section>
 
           <footer className="footer">
             <span>© {new Date().getFullYear()} Carrie Miskin</span>
             <span className="dot">•</span>
-            <span className="muted">Site in progress</span>
+            <span className="muted">
+              Site in progress. All rights reserved.
+            </span>
           </footer>
         </main>
       </div>
