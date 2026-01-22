@@ -1,8 +1,9 @@
 import "./App.css";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 import bg from "./assets/Background-01.png";
 import flower from "./assets/CarrieMiskin_Flower-01.png";
+import flowerWhite from "./assets/CarrieMiskin_Flower-white.png"; // ✅ NEW
 
 export default function App() {
   useEffect(() => {
@@ -16,6 +17,25 @@ export default function App() {
     window.addEventListener("mousemove", onMove, { passive: true });
     return () => window.removeEventListener("mousemove", onMove);
   }, []);
+
+  // Dark mode (keeps your design)
+  const [theme, setTheme] = useState(() => {
+    const saved = localStorage.getItem("theme");
+    if (saved === "dark" || saved === "light") return saved;
+
+    const prefersDark =
+      window.matchMedia &&
+      window.matchMedia("(prefers-color-scheme: dark)").matches;
+
+    return prefersDark ? "dark" : "light";
+  });
+
+  useEffect(() => {
+    document.documentElement.setAttribute("data-theme", theme);
+    localStorage.setItem("theme", theme);
+  }, [theme]);
+
+  const toggleTheme = () => setTheme((t) => (t === "dark" ? "light" : "dark"));
 
   const email = "carriemiskin@gmail.com";
   const linkedInUrl = "https://www.linkedin.com/in/carriemiskin/";
@@ -41,14 +61,42 @@ export default function App() {
         <header className="topBar">
           <div className="brand">
             <div className="logoWrap">
-              <img className="logo" src={flower} alt="Carrie Miskin logo" />
+              {/* ✅ Swap logo based on theme */}
+              <img
+                className="logo"
+                src={theme === "dark" ? flowerWhite : flower}
+                alt="Carrie Miskin logo"
+              />
             </div>
             <div className="brandText">
               <div className="tag">Web & Graphic Designer</div>
             </div>
           </div>
 
-          <nav className="nav" />
+          {/* Dark mode toggle */}
+          <button
+            className="themeToggle"
+            type="button"
+            onClick={toggleTheme}
+            aria-label="Toggle dark mode"
+            title="Toggle dark mode"
+          >
+            {theme === "dark" ? (
+              <svg className="themeIcon" viewBox="0 0 24 24" aria-hidden="true">
+                <path
+                  fill="currentColor"
+                  d="M12 18.25a6.25 6.25 0 1 1 0-12.5 6.25 6.25 0 0 1 0 12.5Zm0-2a4.25 4.25 0 1 0 0-8.5 4.25 4.25 0 0 0 0 8.5ZM11 2h2v3h-2V2Zm0 17h2v3h-2v-3ZM2 11h3v2H2v-2Zm17 0h3v2h-3v-2ZM4.22 5.64l1.42-1.42 2.12 2.12-1.42 1.42-2.12-2.12Zm12.02 12.02 1.42-1.42 2.12 2.12-1.42 1.42-2.12-2.12ZM18.36 4.22l1.42 1.42-2.12 2.12-1.42-1.42 2.12-2.12ZM5.64 19.78l-1.42-1.42 2.12-2.12 1.42 1.42-2.12 2.12Z"
+                />
+              </svg>
+            ) : (
+              <svg className="themeIcon" viewBox="0 0 24 24" aria-hidden="true">
+                <path
+                  fill="currentColor"
+                  d="M20.2 15.7A7.6 7.6 0 0 1 8.3 3.8a.9.9 0 0 1 1.08 1.08A5.8 5.8 0 1 0 19.12 14.62a.9.9 0 0 1 1.08 1.08Z"
+                />
+              </svg>
+            )}
+          </button>
         </header>
 
         <main className="wrap">
@@ -81,7 +129,6 @@ export default function App() {
               <h2>Get in Touch</h2>
 
               <div className="contactRowNew">
-                {/* Email (copy) */}
                 <button
                   className="contactBtnNew"
                   type="button"
@@ -90,7 +137,6 @@ export default function App() {
                   title="Copy email"
                 >
                   <span className="contactBtnIconNew" aria-hidden="true">
-                    {/* BLACK email icon */}
                     <svg
                       className="tileIconNew"
                       viewBox="0 0 24 24"
@@ -115,7 +161,6 @@ export default function App() {
 
                   <span className="contactBtnLabelNew">Email</span>
 
-                  {/* copy icon under Email */}
                   <span className="copyPillNew" aria-hidden="true">
                     <svg
                       className="copyIconNew"
@@ -140,7 +185,6 @@ export default function App() {
                   </span>
                 </button>
 
-                {/* LinkedIn */}
                 <a
                   className="contactBtnNew"
                   href={linkedInUrl}
@@ -153,7 +197,6 @@ export default function App() {
                   <span className="contactBtnLabelNew">LinkedIn</span>
                 </a>
 
-                {/* GitHub */}
                 <a
                   className="contactBtnNew"
                   href={githubUrl}
@@ -176,10 +219,8 @@ export default function App() {
                   <span className="contactBtnLabelNew">GitHub</span>
                 </a>
 
-                {/* Location */}
                 <div className="contactBtnNew contactBtnStaticNew">
                   <span className="contactBtnIconNew" aria-hidden="true">
-                    {/* BLACK location pin */}
                     <svg
                       className="tileIconNew"
                       viewBox="0 0 24 24"
@@ -211,9 +252,9 @@ export default function App() {
           <footer className="footer">
             <span>© {new Date().getFullYear()} Carrie Miskin</span>
             <span className="dot">•</span>
-            <span className="muted">
-              Site in progress. All rights reserved.
-            </span>
+            <span className="muted">Site in progress</span>
+            <span className="dot">•</span>
+            <span className="muted2">All rights reserved</span>
           </footer>
         </main>
       </div>

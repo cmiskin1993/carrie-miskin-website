@@ -3,16 +3,44 @@
    CLEAN + CONSISTENT TYPE
    ========================= */
 
+/* Light defaults (your current look) */
 :root {
   --ink: #1f1f1f;
   --muted: rgba(31, 31, 31, 0.62);
+
   --paper: rgba(255, 255, 255, 0.78);
   --stroke: rgba(31, 31, 31, 0.1);
   --shadow: 0 18px 45px rgba(0, 0, 0, 0.12);
+
+  --veil: rgba(255, 255, 255, 0.45);
+
+  /* tile + icon colors (so icons flip automatically in dark mode) */
+  --tileBorder: rgba(31, 31, 31, 0.12);
+  --tileBg: rgba(255, 255, 255, 0.84);
+  --tileBgHover: rgba(255, 255, 255, 0.92);
+  --iconInk: #111;
+
   --radius: 24px;
 
   --mx: 0;
   --my: 0;
+}
+
+/* Dark mode overrides (NO redesign — same sizing/type) */
+:root[data-theme="dark"] {
+  --ink: rgba(255, 255, 255, 0.92);
+  --muted: rgba(255, 255, 255, 0.65);
+
+  --paper: rgba(20, 20, 20, 0.62);
+  --stroke: rgba(255, 255, 255, 0.12);
+  --shadow: 0 18px 45px rgba(0, 0, 0, 0.55);
+
+  --veil: rgba(0, 0, 0, 0.55);
+
+  --tileBorder: rgba(255, 255, 255, 0.14);
+  --tileBg: rgba(20, 20, 20, 0.72);
+  --tileBgHover: rgba(30, 30, 30, 0.82);
+  --iconInk: rgba(255, 255, 255, 0.92);
 }
 
 * {
@@ -55,7 +83,7 @@ a {
   position: absolute;
   inset: 0;
   z-index: 0;
-  background: rgba(255, 255, 255, 0.45);
+  background: var(--veil);
 }
 
 .content {
@@ -127,6 +155,7 @@ a {
   padding: 20px 20px 0;
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
 
 .brand {
@@ -147,6 +176,32 @@ a {
   font-size: 14px;
   color: var(--muted);
   font-weight: 500;
+}
+
+/* NEW: theme toggle (small, doesn’t change layout) */
+.themeToggle {
+  appearance: none;
+  border: 1px solid var(--stroke);
+  background: var(--paper);
+  color: var(--ink);
+  border-radius: 999px;
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.06);
+  transition: transform 160ms ease, box-shadow 160ms ease, background 160ms ease;
+}
+
+.themeToggle:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.09);
+}
+
+.themeIcon {
+  width: 18px;
+  height: 18px;
 }
 
 /* ---------- Cards ---------- */
@@ -189,6 +244,10 @@ a {
   font-weight: 500;
 }
 
+:root[data-theme="dark"] .pill {
+  background: rgba(0, 0, 0, 0.25);
+}
+
 /* ---------- Info Grid ---------- */
 .infoGrid {
   margin-top: 20px;
@@ -203,7 +262,7 @@ a {
 
 .infoCard h2 {
   margin: 0 0 12px;
-  font-size: 15px;
+  font-size: 15px; /* keeping exactly what you had */
   font-weight: 800;
   letter-spacing: -0.02em;
   text-align: left;
@@ -218,8 +277,8 @@ a {
 }
 
 /* =========================
-     Contact tiles 
-     ========================= */
+   Contact tiles 
+   ========================= */
 
 .contactRowNew {
   margin-top: 14px;
@@ -230,8 +289,8 @@ a {
 
 .contactBtnNew {
   appearance: none;
-  border: 1px solid rgba(31, 31, 31, 0.12);
-  background: rgba(255, 255, 255, 0.84);
+  border: 1px solid var(--tileBorder);
+  background: var(--tileBg);
   border-radius: 18px;
 
   display: flex;
@@ -254,7 +313,7 @@ a {
 .contactBtnNew:hover {
   transform: translateY(-2px);
   box-shadow: 0 14px 30px rgba(0, 0, 0, 0.09);
-  background: rgba(255, 255, 255, 0.92);
+  background: var(--tileBgHover);
 }
 
 .contactBtnNew:active {
@@ -269,7 +328,7 @@ a {
   font-weight: 800;
   font-size: 30px;
   line-height: 1;
-  color: #111;
+  color: var(--iconInk); /* KEY: flips in dark mode */
 }
 
 /* SVG tile icons (email + location) */
@@ -277,7 +336,7 @@ a {
   width: 38px;
   height: 38px;
   display: block;
-  color: #111;
+  color: var(--iconInk); /* KEY: flips in dark mode */
 }
 
 /* GitHub SVG */
@@ -285,7 +344,7 @@ a {
   width: 34px;
   height: 34px;
   display: block;
-  color: #111;
+  color: var(--iconInk); /* KEY: flips in dark mode */
 }
 
 .contactBtnLabelNew {
@@ -298,7 +357,7 @@ a {
 .contactBtnHintNew {
   font-size: 10px;
   font-weight: 500;
-  color: rgba(31, 31, 31, 0.55);
+  color: var(--muted); /* use muted token */
   line-height: 1.2;
   text-align: center;
 }
@@ -310,15 +369,13 @@ a {
   border-radius: 14px;
   display: grid;
   place-items: center;
-  /* background: rgba(255, 255, 255, 0.92);
-  border: 1px solid rgba(31, 31, 31, 0.12);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.06); */
+  /* keeping your original no-background look */
 }
 
 .copyIconNew {
   width: 20px;
   height: 20px;
-  color: rgba(31, 31, 31, 0.7);
+  color: var(--muted); /* use muted token */
 }
 
 .contactBtnStaticNew {
@@ -328,7 +385,7 @@ a {
 .contactBtnStaticNew:hover {
   transform: none;
   box-shadow: 0 10px 24px rgba(0, 0, 0, 0.06);
-  background: rgba(255, 255, 255, 0.84);
+  background: var(--tileBg);
 }
 
 /* ---------- Footer ---------- */
