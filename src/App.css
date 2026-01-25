@@ -2,6 +2,50 @@
    CarrieMiskin.com — App.css
    ========================= */
 
+.topNav {
+  display: flex;
+  align-items: center;
+}
+
+/* Resume pill */
+.resumeLink {
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  height: 38px;
+  padding: 0 14px;
+
+  border-radius: 999px;
+  border: 1px solid var(--toggle-border);
+  background: var(--toggle-bg);
+  color: var(--ink);
+
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  text-decoration: none;
+
+  backdrop-filter: blur(10px);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.06);
+  transition: transform 160ms ease, box-shadow 160ms ease, background 160ms ease;
+}
+
+.resumeLink:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.09);
+}
+
+.resumeLink:active {
+  transform: translateY(0px);
+}
+
+.resumeLink:focus-visible {
+  outline: 2px solid rgba(120, 120, 120, 0.45);
+  outline-offset: 3px;
+}
+
 :root {
   --ink: #1f1f1f;
   --muted: rgba(31, 31, 31, 0.62);
@@ -520,4 +564,409 @@ a {
   .contactRowNew {
     grid-template-columns: 1fr;
   }
+}
+
+/* =========================
+   Resume page
+   ========================= */
+
+/* =========================
+   Top nav (right side)
+   ========================= */
+
+.topNav {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-right: 12px;
+}
+
+.resumeLink {
+  display: inline-flex;
+  align-items: center;
+  height: 34px;
+  padding: 0 12px;
+  border-radius: 999px;
+  border: 1px solid var(--toggle-border);
+  background: var(--toggle-bg);
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--ink);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.06);
+}
+
+.resumeLink:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.09);
+}
+
+/* =========================
+     Resume page (HTML layout)
+     ========================= */
+
+.resumeHero {
+  margin-top: 28px;
+  padding: 26px;
+}
+
+.resumeHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 18px;
+}
+
+.resumeName {
+  margin: 0;
+  font-size: clamp(28px, 3vw, 40px);
+  letter-spacing: -0.02em;
+  line-height: 1.05;
+  font-weight: 900;
+}
+
+.resumeTitle {
+  margin-top: 8px;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--muted);
+}
+
+.resumeMeta {
+  margin-top: 10px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--muted);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.resumeMetaDot {
+  opacity: 0.7;
+}
+
+.resumeInlineLink {
+  color: var(--ink);
+  text-decoration: none;
+  font-weight: 800;
+}
+
+.resumeInlineLink:hover {
+  text-decoration: underline;
+}
+
+.resumeHeaderLinks {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.resumeChipLink {
+  display: inline-flex;
+  align-items: center;
+  height: 34px;
+  padding: 0 12px;
+  border-radius: 999px;
+  border: 1px solid var(--tile-border);
+  background: var(--tile-bg);
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--ink);
+}
+
+.resumeChipLink:hover {
+  background: var(--tile-bg-hover);
+  transform: translateY(-1px);
+}
+
+/* Two-column layout: main + sticky side */
+.resumeLayout {
+  margin-top: 16px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 280px;
+  gap: 16px;
+  align-items: start;
+}
+
+.resumeMain {
+  background: var(--paper);
+  border-radius: var(--radius);
+  border: 1px solid var(--stroke);
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(16px);
+  padding: 22px;
+}
+
+.resumeSection + .resumeSection {
+  margin-top: 20px;
+  padding-top: 18px;
+  border-top: 1px solid var(--stroke);
+}
+
+.resumeH2 {
+  margin: 0 0 10px;
+  font-size: 14px;
+  font-weight: 900;
+  letter-spacing: -0.02em;
+}
+
+.resumeP {
+  margin: 0;
+  color: var(--muted);
+  font-size: 15px;
+  line-height: 1.55;
+  font-weight: 500;
+}
+
+.resumePills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.resumePill {
+  padding: 8px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--stroke);
+  background: rgba(255, 255, 255, 0.7);
+  font-size: 12px;
+  font-weight: 800;
+}
+
+:root[data-theme="dark"] .resumePill {
+  background: rgba(20, 22, 26, 0.55);
+}
+
+.resumeStack {
+  display: grid;
+  gap: 14px;
+}
+
+.resumeItem {
+  padding: 14px;
+  border-radius: 18px;
+  border: 1px solid var(--tile-border);
+  background: var(--tile-bg);
+}
+
+.resumeItemTop {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+.resumeItemRole {
+  font-weight: 900;
+  font-size: 14px;
+  letter-spacing: -0.01em;
+}
+
+.resumeItemCompany {
+  margin-top: 4px;
+  font-weight: 800;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.resumeItemDates {
+  font-size: 12px;
+  font-weight: 900;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+.resumeBullets {
+  margin: 10px 0 0;
+  padding-left: 16px;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.55;
+  font-weight: 600;
+}
+
+.resumeBullets li + li {
+  margin-top: 6px;
+}
+
+/* Sticky side nav */
+.resumeSide {
+  position: sticky;
+  top: 18px;
+}
+
+.resumeSideCard {
+  background: var(--paper);
+  border-radius: var(--radius);
+  border: 1px solid var(--stroke);
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(16px);
+  padding: 16px;
+}
+
+.resumeSideTitle {
+  font-size: 12px;
+  font-weight: 900;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  margin-bottom: 10px;
+}
+
+.resumeSideNav {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 6px;
+}
+
+.resumeSideLink {
+  display: block;
+  padding: 10px 10px;
+  border-radius: 12px;
+  border: 1px solid var(--tile-border);
+  background: var(--tile-bg);
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 900;
+  color: var(--ink);
+}
+
+.resumeSideLink:hover {
+  background: var(--tile-bg-hover);
+  transform: translateY(-1px);
+}
+
+.resumeSideDivider {
+  height: 1px;
+  background: var(--stroke);
+  margin: 12px 0;
+}
+
+.resumeSideBtn,
+.resumeSideBtnGhost {
+  display: inline-flex;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  height: 38px;
+  border-radius: 14px;
+  font-size: 13px;
+  font-weight: 900;
+  text-decoration: none;
+}
+
+.resumeSideBtn {
+  border: 1px solid var(--toggle-border);
+  background: var(--toggle-bg);
+  color: var(--ink);
+  margin-bottom: 10px;
+}
+
+.resumeSideBtnGhost {
+  border: 1px solid var(--tile-border);
+  background: var(--tile-bg);
+  color: var(--ink);
+}
+
+.resumeSideBtn:hover,
+.resumeSideBtnGhost:hover {
+  transform: translateY(-1px);
+}
+
+/* Responsive */
+@media (max-width: 980px) {
+  .resumeLayout {
+    grid-template-columns: 1fr;
+  }
+  .resumeSide {
+    position: static;
+  }
+  .resumeHeader {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .resumeHeaderLinks {
+    justify-content: flex-start;
+  }
+}
+
+/* =========================
+   Resume readability fixes
+   (add to bottom of App.css)
+   ========================= */
+
+.resumePage {
+  color: var(--ink);
+}
+
+.resumePage .heroCard,
+.resumePage .resumeItem,
+.resumePage .resumeSideCard {
+  color: var(--ink);
+}
+
+/* Main paragraph + bullet text */
+.resumeText,
+.resumeBullets,
+.resumeBullets li,
+.resumeP {
+  color: var(--ink) !important;
+  opacity: 1 !important;
+}
+
+/* Keep meta/secondary text muted */
+.resumeMeta,
+.resumeTitle,
+.resumeItemCompany,
+.resumeItemDates,
+.resumeSideTitle {
+  color: var(--muted);
+}
+
+/* Bullet spacing so nothing looks “cut off” */
+.resumeBullets {
+  margin: 14px 0 0;
+  padding-left: 22px;
+}
+
+.resumeBullets li {
+  line-height: 1.55;
+  margin: 10px 0;
+}
+
+/* Make sure long lines wrap nicely */
+.resumePage .resumeItem,
+.resumePage .resumeSection,
+.resumePage .resumeP,
+.resumePage .resumeBullets li {
+  overflow-wrap: anywhere;
+  word-break: normal;
+}
+
+.resumeIconLink {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 999px;
+  color: var(--ink);
+  text-decoration: none;
+  transition: background 160ms ease, transform 160ms ease;
+}
+
+.resumeIconLink:hover {
+  background: var(--tile-bg);
+  transform: translateY(-1px);
+}
+
+.navIcon {
+  width: 18px;
+  height: 18px;
 }
